@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moviecats</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1408/1408721.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div id="login_div">
+        <header>
+            <h1>Moviecats</h1>
+        </header>
+
+        <div class="log">
+            <h2 id="log_label">Incio de sesión</h2>
+            <input type="text" placeholder="Ingresa tu usuario" id="user_input">
+            <input type="password" placeholder="Ingresa tu contraseña" id="pass_input">
+        </div>
+    
+        <div>
+            <input type="checkbox" id="check_pass" onclick="show_password()">
+            <label id="check_pass_label">Ver Contraseña</label>
+        </div>
+    
+        <div class="log_buttons">
+            <button onclick="log_in()">Ingresar</button>
+            <button onclick="log_to_new_user_div()">Crear Usuario</button>
+        </div>
+    </div>
+
+    <div id="create_user_div">
+        <header>
+            <h1>Moviecats</h1>
+        </header>
+            <h2 id="create_user_label">Crea tu usuario</h2>
+            <div class="new_user_input1">
+                <input type="text" placeholder="Ingresa tu nickname" id="new_user_input">
+                <input type="text" placeholder="Ingresa tu nombre completo" id="new_name_input">
+            </div>
+    
+            <div class="new_user_input2">
+                <input type="text" placeholder="Ingresa tu contraseña" id="new_pass_input">
+                <input type="text" placeholder="Ingresa tu dpi" id="new_dpi_input">
+            </div>
+    
+            <div class="new_user_input3">
+                <input type="text" placeholder="Ingresa tu número de teléfono" id="new_phone_input">
+            </div>
+    
+            <div class="new_user_buttons">
+                <button onclick="">Registrarme</button>
+                <button onclick="new_user_to_log_div()">Regresar</button>
+            </div>      
+    </div>
+
+    <div id="admin_div">
+        <header>
+            <nav class="admin_nav">
+                <h3 onclick="">Usuarios </h3>
+                <h3 onclick="">Artistas</h3>
+                <h3 onclick="">Música Programada</h3>
+                <h3 onclick="">Podcast</h3>
+                <h3 onclick="admin_div_to_log()">Cerrar Sesión</h3>
+            </nav>
+        </header>
+    </div>
+
+    <div id="user_div">
+        <header>
+            <nav class="user_nav">
+                <h3 onclick="">Canciones</h3>
+                <h3 onclick="">Playlist</h3>
+                <h3 onclick="">Personas</h3>
+                <h3 onclick="">Amigos y Bloqueados</h3>
+                <h3 onclick="">Publicar</h3>
+                <h3 onclick="user_div_to_log()">Cerrar Sesión</h3>
+            </nav>
+        </header>
+    </div>
+
+    <div id="user_admin_div">
+        
+        <div id="user_graph"></div>
+        <input type="file" id="userJson">
+        <button onclick="graphUser()">Graficar Usuarios</button>
+        <button onclick="loadUser()">Cargar Usuarios</button>
+
+    </div>
+</body>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>   
+<script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+<script src="main.js"></script>
+</html>

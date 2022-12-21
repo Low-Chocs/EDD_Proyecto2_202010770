@@ -1,0 +1,92 @@
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    margin:0px;
+}
+
+header{
+    padding:0.5rem 1rem 1rem;
+    background-color: black;
+    color: white;
+}
+
+.log{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#log_label{
+    margin-top: 80px;
+}
+input{
+    margin-top: 50px;
+    width:45%;
+    height: 25%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border-radius: 10cm;
+}
+.user_input{
+    margin-top: 30px;
+}
+
+#check_pass{
+    margin-left: 28.3%;
+    margin-right: 0%;
+    margin-top: 18px;
+    width:auto;
+    height: auto;
+}
+
+button{
+    text-align: center;
+    border-radius: 10cm;
+    margin-top: 50px;
+    width: 20%;
+    padding: 2% 1%;
+    background-color:white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: black; 
+    color: white;
+    transition: 0.6s;
+}
+
+.log_buttons{
+    margin-left: 37%;
+}
+input:hover { 
+    background-color: rgb(223 216 215);
+    transition: 0.9s;
+}
+
+#create_user_div{
+    display: none;
+}
+
+#admin_div{
+    display: none;
+}
+
+#user_div{
+    display: none;
+}
+
+#user_admin_div{
+    display: none;
+}
+
+.admin_nav{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.user_nav{
+    display: flex;
+    justify-content: space-between;
+
+}
