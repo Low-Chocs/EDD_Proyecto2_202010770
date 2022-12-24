@@ -53,7 +53,7 @@
             </div>
     
             <div class="new_user_buttons">
-                <button onclick="">Registrarme</button>
+                <button onclick="register_new_user()">Registrarme</button>
                 <button onclick="new_user_to_log_div()">Regresar</button>
             </div>      
     </div>
@@ -84,11 +84,10 @@
     </div>
 
     <div id="user_admin_div">
-        
-        <div id="user_graph"></div>
         <input type="file" id="userJson">
-        <button onclick="graphUser()">Graficar Usuarios</button>
-        <button onclick="loadUser()">Cargar Usuarios</button>
+        <button onclick="graph_user()">Graficar Usuarios</button>
+        <button onclick="load_user()">Cargar Usuarios</button>
+        <div id="user_graph"></div>
 
     </div>
 </body>

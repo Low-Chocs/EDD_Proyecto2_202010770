@@ -67,6 +67,29 @@ input:hover {
     display: none;
 }
 
+.new_user_input1{
+    margin-top: 0%;
+    margin-left: 10%;
+}
+.new_user_input2{
+    margin-left: 10%;
+}
+.new_user_input3{
+    margin-left: 30%
+}
+#new_phone_input{
+    width: 57%;
+    margin-top: 5%;
+}
+#create_user_label{
+    margin-top: 5%;
+    margin-left: 44%;
+    margin-bottom: 0%;
+}
+.new_user_buttons{
+    margin-left: 38.3%;
+}
+
 #admin_div{
     display: none;
 }
