@@ -77,7 +77,7 @@ class user_List{
         var conexiones ="";
         var nodos ="";
         var numnodo= 0;
-        while (temporal < null) {
+        while (temporal != null) {
             nodos+=  "N" + numnodo + "[label=\"Username: " + temporal.username + " \n Complete Name: " + temporal.name + " \n Password: " + temporal.password + " \n DPI: " + temporal.dpi + "\nPhone: " + temporal.phone + "\nAdmin: " + temporal.admin + "\"];\n"
             if(temporal.next != null){
                 var auxnum = numnodo+1
@@ -241,13 +241,68 @@ function admin_div_to_log(){
     var div_login = document.getElementById('login_div');
     var div_admin = document.getElementById('admin_div');
     var div_user = document.getElementById('user_admin_div');
+    var div_actor = document.getElementById("actor_admin_div");
+    var div_movies = document.getElementById("movies_admin_div");
+    var div_categories = document.getElementById("categories_admin_div");
 
     div_login.style.display = "block";
     div_admin.style.display = "none";  
     div_user.style.display = "none";
+    div_actor.style.display = "none"; 
+    div_movies.style.display = "none";
+    div_categories.style.display = "none"; 
 }
 //END: HIDE AND SHOW DIV ELEMENTS
 
+//BEGIN NAVS ADMIN
+function user_admin_nav(){
+    var div_user = document.getElementById('user_admin_div');
+    var div_actor = document.getElementById("actor_admin_div");
+    var div_movies = document.getElementById("movies_admin_div");
+    var div_categories = document.getElementById("categories_admin_div");
+
+    div_user.style.display = "block";
+    div_actor.style.display = "none"; 
+    div_movies.style.display = "none";
+    div_categories.style.display = "none";
+}
+
+function actor_admin_nav(){
+    var div_user = document.getElementById('user_admin_div');
+    var div_actor = document.getElementById("actor_admin_div");
+    var div_movies = document.getElementById("movies_admin_div");
+    var div_categories = document.getElementById("categories_admin_div");
+
+    div_user.style.display = "none";
+    div_actor.style.display = "block"; 
+    div_movies.style.display = "none";
+    div_categories.style.display = "none"; 
+}
+
+function movie_admin_nav(){
+    var div_user = document.getElementById('user_admin_div');
+    var div_actor = document.getElementById("actor_admin_div");
+    var div_movies = document.getElementById("movies_admin_div");
+    var div_categories = document.getElementById("categories_admin_div");
+
+    div_user.style.display = "none";
+    div_actor.style.display = "none"; 
+    div_movies.style.display = "block";
+    div_categories.style.display = "none"; 
+}
+
+function categories_admin_nav(){
+    var div_user = document.getElementById('user_admin_div');
+    var div_actor = document.getElementById("actor_admin_div");
+    var div_movies = document.getElementById("movies_admin_div");
+    var div_categories = document.getElementById("categories_admin_div");
+
+    div_user.style.display = "none";
+    div_actor.style.display = "none"; 
+    div_movies.style.display = "none";
+    div_categories.style.display = "block"; 
+}
+//END NAVS ADMIN
 //BEGIN: Dynamic web
 
 //Changes the password input to a text input and viceversa
@@ -308,8 +363,9 @@ function register_new_user(){
     new_user_to_log_div();
 }
 
+//BEGIN: Json load for users
 function load_user() {
-    var file = document.getElementById("userJson").files[0];
+    var file = document.getElementById("user_json").files[0];
     if (!file) {
       return;
     }
@@ -325,14 +381,79 @@ function load_user() {
         if(!user_list.is_repeated(data.username)){
             continue;
         }
-        user_list.insert(data.username, data.name, sha256(data.password), data.dpi,  data.phone, data.admin)
+        console.log(data.password);
+        user_list.insert(data.nombre_usuario, data.nombre, sha256(data.contrasenia), data.dpi,  data.telefono, data.admin)
       }
       graph_user();
     };
     reader.readAsText(file);
 }
+//END: Json load for users
 
+//BEIGN: JSON load for iconic actors
+function load_actors() {
+    var file = document.getElementById("actor_json").files[0];
+    if (!file) {
+      return;
+    }
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      let content = e.target.result;
+  
+      const _data = JSON.parse(content);
+  
+      for (const i in _data) {
+        let data = _data[i];
+        console.log(data.dni, data.nombre_actor, data.correo, data.descripcion)
+      }
+    };
+    reader.readAsText(file);
+}
+//END: JSON load for iconic actors
+
+//BEIGN: JSON load for movies
+function load_movies(){
+    var file = document.getElementById("movies_json").files[0];
+    if (!file) {
+      return;
+    }
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      let content = e.target.result;
+  
+      const _data = JSON.parse(content);
+  
+      for (const i in _data) {
+        let data = _data[i];
+        console.log(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria)
+      }
+    };
+    reader.readAsText(file);
+}
+//END: JSON load for movies
+
+//BEIGN: JSON load for Categories
+function load_categories(){
+    var file = document.getElementById("categories_json").files[0];
+    if (!file) {
+      return;
+    }
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      let content = e.target.result;
+  
+      const _data = JSON.parse(content);
+  
+      for (const i in _data) {
+        let data = _data[i];
+        console.log(data.id_categoria, data.company)
+      }
+    };
+    reader.readAsText(file);
+}
+//END: JSON load for Categories
 function graph_user(){
+    console.log(user_list)
     user_list.graph()
 }
 //END: Dynamic web

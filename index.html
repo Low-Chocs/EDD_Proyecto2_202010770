@@ -61,10 +61,10 @@
     <div id="admin_div">
         <header>
             <nav class="admin_nav">
-                <h3 onclick="">Usuarios </h3>
-                <h3 onclick="">Artistas</h3>
-                <h3 onclick="">Música Programada</h3>
-                <h3 onclick="">Podcast</h3>
+                <h3 onclick="user_admin_nav()">Usuarios </h3>
+                <h3 onclick="actor_admin_nav()">Actores</h3>
+                <h3 onclick="movie_admin_nav()">Películas</h3>
+                <h3 onclick="categories_admin_nav()">Categorías</h3>
                 <h3 onclick="admin_div_to_log()">Cerrar Sesión</h3>
             </nav>
         </header>
@@ -84,12 +84,33 @@
     </div>
 
     <div id="user_admin_div">
-        <input type="file" id="userJson">
+        <input type="file" id="user_json">
         <button onclick="graph_user()">Graficar Usuarios</button>
         <button onclick="load_user()">Cargar Usuarios</button>
         <div id="user_graph"></div>
-
     </div>
+
+    <div id="actor_admin_div">
+        <input type="file" id="actor_json">
+        <button onclick="">Graficar Actores</button>
+        <button onclick="load_actors()">Cargar Actores</button>
+        <div id="actor_graph"></div>
+    </div>
+
+    <div id="movies_admin_div">
+        <input type="file" id="movies_json">
+        <button onclick="">Graficar Películas</button>
+        <button onclick="load_movies()">Cargar Películas</button>
+        <div id="movies_graph"></div>
+    </div>
+
+    <div id="categories_admin_div">
+        <input type="file" id="categories_json">
+        <button onclick="">Graficar Categorías</button>
+        <button onclick="load_actors()">Cargar Categorías</button>
+        <div id="categories_graph"></div>
+    </div>
+
 </body>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>   

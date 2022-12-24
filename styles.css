@@ -9,6 +9,11 @@ header{
     background-color: black;
     color: white;
 }
+h3:hover { 
+    color: red;
+    transition: 0.6s;
+    cursor: pointer;
+}
 
 .log{
     display: flex;
@@ -101,7 +106,15 @@ input:hover {
 #user_admin_div{
     display: none;
 }
-
+#actor_admin_div{
+    display: none;
+}
+#movies_admin_div{
+    display: none;
+}
+#categories_admin_div{
+    display: none;
+}
 .admin_nav{
     display: flex;
     justify-content: space-between;
