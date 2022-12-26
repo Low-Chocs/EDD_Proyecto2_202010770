@@ -102,6 +102,9 @@ input:hover {
 #user_div{
     display: none;
 }
+#actor_user_div{
+    display: none;
+}
 
 #user_admin_div{
     display: none;

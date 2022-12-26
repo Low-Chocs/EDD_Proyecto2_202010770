@@ -151,6 +151,18 @@ class actor_binary_search_tree{
             if(actual_root != null){
                 this.in_order(actual_root.left);
                 console.log(actual_root.dni);
+                var parent_div = document.getElementById("actor_user_div");
+                var children_div = document.createElement("div");
+                children_div.id = actual_root.dni;
+                var h2_name = document.createElement("h2");
+                var _name = document.createTextNode(actual_root.name);
+                var p_description = document.createElement("p");
+                var _description = document.createTextNode("Description: "+actual_root.description);
+                h2_name.appendChild(_name);
+                p_description.appendChild(_description);
+                children_div.appendChild(h2_name);
+                children_div.appendChild(p_description);
+                parent_div.appendChild(children_div);
                 this.in_order(actual_root.right);
             }
         }
@@ -158,6 +170,19 @@ class actor_binary_search_tree{
         pre_order(actual_root){
             //Case base
             if(actual_root != null){
+                var parent_div = document.getElementById("actor_user_div");
+                var children_div = document.createElement("div");
+                children_div.id = actual_root.dni;
+                var h2_name = document.createElement("h2");
+                var _name = document.createTextNode(actual_root.name);
+                var p_description = document.createElement("p");
+                var _description = document.createTextNode("Description: "+actual_root.description);
+                h2_name.appendChild(_name);
+                p_description.appendChild(_description);
+                children_div.appendChild(h2_name);
+                children_div.appendChild(p_description);
+                parent_div.appendChild(children_div);
+                
                 console.log(actual_root.dni);
                 this.pre_order(actual_root.left);
                 this.pre_order(actual_root.right);
@@ -169,8 +194,30 @@ class actor_binary_search_tree{
             if(actual_root != null){
                 this.pre_order(actual_root.left);
                 this.pre_order(actual_root.right);
+                var parent_div = document.getElementById("actor_user_div");
+                var children_div = document.createElement("div");
+                children_div.id = actual_root.dni;
+                var h2_name = document.createElement("h2");
+                var _name = document.createTextNode(actual_root.name);
+                var p_description = document.createElement("p");
+                var _description = document.createTextNode("Description: "+actual_root.description);
+                h2_name.appendChild(_name);
+                p_description.appendChild(_description);
+                children_div.appendChild(h2_name);
+                children_div.appendChild(p_description);
+                parent_div.appendChild(children_div);
                 console.log(actual_root.dni);
             }
+        }
+        eliminate_div(actual_root){
+            this.in_order(actual_root.left);
+            console.log(actual_root.dni);
+            var div_to_erase = document.getElementById(actual_root.dni);
+            div_to_erase.remove()
+            this.in_order(actual_root.right);
+
+
+            
         }
     
         create_dot(){
@@ -334,12 +381,14 @@ function log_to_user_div(){
     var div_user = document.getElementById('user_div');
     div_login.style.display = "none";    
     div_user.style.display = "block";
+    actor_tree.pre_order(actor_tree.root);
 }
 //User -> log
 function user_div_to_log(){
     var div_user = document.getElementById('user_div');
     div_user.style.display = "none"; 
     log.style.display = "block"
+    div_actor.style.display = "none";
 }
 //log -> admin
 function log_to_admin_div(){
@@ -365,6 +414,7 @@ function admin_div_to_log(){
     div_actor.style.display = "none"; 
     div_movies.style.display = "none";
     div_categories.style.display = "none"; 
+    
 }
 //END: HIDE AND SHOW DIV ELEMENTS
 
@@ -415,6 +465,18 @@ function categories_admin_nav(){
     div_actor.style.display = "none"; 
     div_movies.style.display = "none";
     div_categories.style.display = "block"; 
+}
+
+function actors_user_nav(){
+    //var div_user = document.getElementById('user_user_div');
+    var div_actor = document.getElementById("actor_user_div");
+    //var div_movies = document.getElementById("movies_user_div");
+    //var div_categories = document.getElementById("categories_user_div");
+
+    //div_user.style.display = "none";
+    div_actor.style.display = "block"; 
+    //div_movies.style.display = "none";
+    //div_categories.style.display = "block"; 
 }
 //END NAVS ADMIN
 //BEGIN: Dynamic web
@@ -574,6 +636,24 @@ function graph_user(){
 function graph_actor(){
     actor_tree.create_dot()
 }
+
+function pre_order(){
+    console.log("Pre order");
+    actor_tree.eliminate_div(actor_tree.root);
+    actor_tree.pre_order(actor_tree.root);
+}
+
+function in_order(){
+    console.log("In order");
+    actor_tree.eliminate_div(actor_tree.root);
+    actor_tree.in_order(actor_tree.root);
+}
+
+function post_order(){
+    console.log("Post order");
+    actor_tree.eliminate_div(actor_tree.root);
+    actor_tree.post_order(actor_tree.root);
+}
 //END: Dynamic web
 
 //BEGIN: Creating user list
@@ -582,10 +662,6 @@ var actor_tree = new actor_binary_search_tree();
 user_list.insert("EDD", "Oscar Armi",sha256("12345678"),"2354168452525","12345678", true);
 user_list.insert("ED", "Oscar Armi", sha256("12345678"),"2354168452525","12345678", false);
 //END: Creating user list
-hello = document.getElementById("login_div");
-const hellos = document.createElement("p");
-const hel = document.createTextNode("kjafkjadshkjafshjkasd");
-hellos.appendChild(hel)
-hello.appendChild(hellos)
+
 
 

@@ -75,12 +75,18 @@
             <nav class="user_nav">
                 <h3 onclick="">Canciones</h3>
                 <h3 onclick="">Playlist</h3>
-                <h3 onclick="">Personas</h3>
+                <h3 onclick="actors_user_nav()">Actores</h3>
                 <h3 onclick="">Amigos y Bloqueados</h3>
                 <h3 onclick="">Publicar</h3>
                 <h3 onclick="user_div_to_log()">Cerrar Sesión</h3>
             </nav>
         </header>
+    </div>
+
+    <div id="actor_user_div">
+        <button onclick="pre_order()">Preorder</button>
+        <button onclick="in_order()">Inorder</button>
+        <button onclick="post_order()">Postorder</button>
     </div>
 
     <div id="user_admin_div">
@@ -89,6 +95,8 @@
         <button onclick="load_user()">Cargar Usuarios</button>
         <div id="user_graph"></div>
     </div>
+
+
 
     <div id="actor_admin_div">
         <input type="file" id="actor_json">
