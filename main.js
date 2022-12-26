@@ -98,6 +98,120 @@ class user_List{
 
 //END: User LIST
 
+//BEGIN: ACTOR TREE:
+class actor_Node{
+    constructor(_dni, _name, _mail, _description){
+        this.left = null;
+        this.right = null;
+        this.dni = _dni;
+        this.name = _name;
+        this.mail = _mail;
+        this.description = _description;
+    }
+}
+
+class actor_binary_search_tree{
+        constructor(){
+            this.root = null;
+            this.quantity = 0;
+        }
+    
+        insert(_dni, _name, _mail, _description){
+    
+            let new_node = new actor_Node(_dni, _name, _mail, _description);
+    
+            if(this.root == null){
+                this.root = new_node;
+                this.quantity++;
+                return;
+            }
+            //Calling the recursion function for insertion
+            this.root = this.insert_node(this.root, new_node);
+        }
+    
+        //Recursive function that inserts a node
+        insert_node(actual_root, new_node){
+            //Base Case:
+            if(actual_root == null){
+                actual_root = new_node;
+                return actual_root;
+            }
+            //Traveling between childs:
+            if(new_node.dni < actual_root.dni){
+                actual_root.left = this.insert_node(actual_root.left, new_node); 
+            }
+            if(new_node.dni > actual_root.dni){
+                actual_root.right = this.insert_node(actual_root.right, new_node); 
+            }
+            return actual_root;
+        }
+    
+        in_order(actual_root){
+            //Case base
+            if(actual_root != null){
+                this.in_order(actual_root.left);
+                console.log(actual_root.dni);
+                this.in_order(actual_root.right);
+            }
+        }
+    
+        pre_order(actual_root){
+            //Case base
+            if(actual_root != null){
+                console.log(actual_root.dni);
+                this.pre_order(actual_root.left);
+                this.pre_order(actual_root.right);
+            }
+        }
+    
+        post_order(actual_root){
+            //Case base
+            if(actual_root != null){
+                this.pre_order(actual_root.left);
+                this.pre_order(actual_root.right);
+                console.log(actual_root.dni);
+            }
+        }
+    
+        create_dot(){
+            let text ="digraph BinarySearchTree{label=\"Clients\";";
+            text += this.nodes_dot(this.root);
+            text += "\n";
+            text += this.linking_nodes_dot(this.root);
+            text += "\n}";
+            console.log(text)
+            d3.select("#actor_graph").graphviz()
+            .renderDot(text)
+        }
+        //Creating nodes inorder way
+        nodes_dot(actual_root){
+            let nodes = "\n";
+            if(actual_root != null){
+                nodes += this.nodes_dot(actual_root.left);
+                nodes += "n"+actual_root.dni+"[label =\"Dni: "+actual_root.dni+ " \n Actor Name: " + actual_root.name +" \n Mail: " + actual_root.mail +" \n Description: " + actual_root.description +"\"]\n";
+                nodes += this.nodes_dot(actual_root.right);
+            }
+            return nodes;
+        }
+    
+        linking_nodes_dot(actual_root){
+            let link = "";
+            if(actual_root != null){
+                link += this.linking_nodes_dot(actual_root.left)
+                link += this.linking_nodes_dot(actual_root.right)
+                if(actual_root.left != null){
+                    link += "n"+actual_root.dni + "-> n"+actual_root.left.dni+"\n";
+                }
+                if(actual_root.right != null){
+                    link += "n"+actual_root.dni + "-> n"+actual_root.right.dni+"\n";
+                }
+            }
+            return link;
+    
+        }
+}
+//END: ACTOR TREE
+
 //Sha256 code Code by: geraintluff Link: https://geraintluff.github.io/sha256/
 function sha256(ascii) {
 	function rightRotate(value, amount) {
@@ -404,8 +518,9 @@ function load_actors() {
   
       for (const i in _data) {
         let data = _data[i];
-        console.log(data.dni, data.nombre_actor, data.correo, data.descripcion)
+        actor_tree.insert(data.dni, data.nombre_actor, data.correo, data.descripcion)
       }
+      actor_tree.create_dot();
     };
     reader.readAsText(file);
 }
@@ -456,12 +571,21 @@ function graph_user(){
     console.log(user_list)
     user_list.graph()
 }
+function graph_actor(){
+    actor_tree.create_dot()
+}
 //END: Dynamic web
 
 //BEGIN: Creating user list
 var user_list = new user_List();
+var actor_tree = new actor_binary_search_tree();
 user_list.insert("EDD", "Oscar Armi",sha256("12345678"),"2354168452525","12345678", true);
 user_list.insert("ED", "Oscar Armi", sha256("12345678"),"2354168452525","12345678", false);
 //END: Creating user list
+hello = document.getElementById("login_div");
+const hellos = document.createElement("p");
+const hel = document.createTextNode("kjafkjadshkjafshjkasd");
+hellos.appendChild(hel)
+hello.appendChild(hellos)
 
 
