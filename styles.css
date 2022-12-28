@@ -102,9 +102,24 @@ input:hover {
 #user_div{
     display: none;
 }
+
+
 #actor_user_div{
     display: none;
 }
+
+#pre_order_actor{
+    display: block;
+}
+#in_order_actor{
+    display: none;
+}
+
+#post_order_actor{
+    display: none;
+}
+
+
 
 #user_admin_div{
     display: none;
@@ -129,3 +144,6 @@ input:hover {
     justify-content: space-between;
 
 }
+
+
+

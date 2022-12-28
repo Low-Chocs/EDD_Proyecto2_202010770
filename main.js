@@ -150,9 +150,8 @@ class actor_binary_search_tree{
             if(actual_root != null){
                 this.in_order(actual_root.left);
                 console.log(actual_root.dni);
-                var parent_div = document.getElementById("actor_user_div");
+                var parent_div = document.getElementById("in_order_actor");
                 var children_div = document.createElement("div");
-                children_div.id = actual_root.dni;
                 var h2_name = document.createElement("h2");
                 var _name = document.createTextNode(actual_root.name);
                 var p_description = document.createElement("p");
@@ -169,9 +168,8 @@ class actor_binary_search_tree{
         pre_order(actual_root){
             //Case base
             if(actual_root != null){
-                var parent_div = document.getElementById("actor_user_div");
+                var parent_div = document.getElementById("pre_order_actor");
                 var children_div = document.createElement("div");
-                children_div.id = actual_root.dni;
                 var h2_name = document.createElement("h2");
                 var _name = document.createTextNode(actual_root.name);
                 var p_description = document.createElement("p");
@@ -182,7 +180,6 @@ class actor_binary_search_tree{
                 children_div.appendChild(p_description);
                 parent_div.appendChild(children_div);
                 
-                console.log(actual_root.dni);
                 this.pre_order(actual_root.left);
                 this.pre_order(actual_root.right);
             }
@@ -193,9 +190,8 @@ class actor_binary_search_tree{
             if(actual_root != null){
                 this.post_order(actual_root.left);
                 this.post_order(actual_root.right);
-                var parent_div = document.getElementById("actor_user_div");
+                var parent_div = document.getElementById("post_order_actor");
                 var children_div = document.createElement("div");
-                children_div.id = actual_root.dni;
                 var h2_name = document.createElement("h2");
                 var _name = document.createTextNode(actual_root.name);
                 var p_description = document.createElement("p");
@@ -844,8 +840,9 @@ function log_to_user_div(){
 //User -> log
 function user_div_to_log(){
     var div_user = document.getElementById('user_div');
+    var log = document.getElementById('log_div');
     div_user.style.display = "none"; 
-    log.style.display = "block"
+    log.style.display = "block";
     div_actor.style.display = "none";
 }
 //log -> admin
@@ -1040,7 +1037,13 @@ function load_actors() {
         let data = _data[i];
         actor_tree.insert(data.dni, data.nombre_actor, data.correo, data.descripcion)
       }
-      actor_tree.create_dot();
+      actor_tree.create_dot(actor_tree.root);
+      console.log("Preorder");
+      actor_tree.pre_order(actor_tree.root);
+      console.log("Inorder");
+      actor_tree.in_order(actor_tree.root);
+      console.log("Postorder");
+      actor_tree.post_order(actor_tree.root);
     };
     reader.readAsText(file);
 }
@@ -1102,20 +1105,39 @@ function graph_movies(){
 
 function pre_order(){
     console.log("Pre order");
-    actor_tree.eliminate_div(actor_tree.root);
-    actor_tree.pre_order(actor_tree.root);
+
+    var pre_order_actor = document.getElementById("pre_order_actor");
+    var in_d = document.getElementById("in_order_actor");
+    var post = document.getElementById("post_order_actor");
+
+    pre_order_actor.style.display = "block";
+    in_d.style.display = "none";
+    post.style.display = "none";
+
 }
 
 function in_order(){
-    console.log("In order");
-    actor_tree.eliminate_div(actor_tree.root);
-    actor_tree.in_order(actor_tree.root);
+    console.log("in order");
+    var pre = document.getElementById("pre_order_actor");
+    var in_d = document.getElementById("in_order_actor");
+    var post = document.getElementById("post_order_actor");
+    console.log(pre,"jhafjkadfskjhj");
+
+    in_d.style.display = "block";
+    pre.style.display = "none";
+    post.style.display = "none";
+
 }
 
 function post_order(){
     console.log("Post order");
-    actor_tree.eliminate_div(actor_tree.root);
-    actor_tree.post_order(actor_tree.root);
+    var pre = document.getElementById("pre_order_actor");
+    var in_d = document.getElementById("in_order_actor");
+    var post = document.getElementById("post_order_actor");
+    post_order_actor.style.display = "block";
+    pre_order_actor.style.display = "none";
+    in_order_actor.style.display = "none";
+
 }
 //END: Dynamic web
 
