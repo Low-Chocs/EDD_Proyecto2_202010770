@@ -128,7 +128,6 @@ class actor_binary_search_tree{
             //Calling the recursion function for insertion
             this.root = this.insert_node(this.root, new_node);
         }
-    
         //Recursive function that inserts a node
         insert_node(actual_root, new_node){
             //Base Case:
@@ -192,8 +191,8 @@ class actor_binary_search_tree{
         post_order(actual_root){
             //Case base
             if(actual_root != null){
-                this.pre_order(actual_root.left);
-                this.pre_order(actual_root.right);
+                this.post_order(actual_root.left);
+                this.post_order(actual_root.right);
                 var parent_div = document.getElementById("actor_user_div");
                 var children_div = document.createElement("div");
                 children_div.id = actual_root.dni;
@@ -218,6 +217,25 @@ class actor_binary_search_tree{
 
 
             
+        }
+
+        find_actor(_dni){
+            if(this.root == null){
+                return "There is no element in movie tree"
+            }
+
+            let current_node = this.root;
+            while(current_node != null){
+                if(current_node.dni > _dni){
+                    current_node = current_node.left;
+                    continue;
+                }
+                if(current_node.dni < _dni){
+                    current_node = current_node.right;
+                    continue;
+                }
+                return current_node;
+            }
         }
     
         create_dot(){
@@ -258,6 +276,446 @@ class actor_binary_search_tree{
         }
 }
 //END: ACTOR TREE
+
+//BEGIN COMMENT SECTION
+//This classes will help us to get the comments of each movie
+//Every user will be able to check the comments of the movie
+class comentary_node{
+    constructor(_author, _comentary){
+        this.author = _author;
+        this.comentary = _comentary;
+        this.next = null; 
+    }
+}
+class comentary_list{
+
+    contructor(){
+        this.head = null;
+        this.buttom = null;
+        this.quantity = 0;
+    }
+
+    insert(_author, _comentary){
+        var new_comment = new user_Node(_author,_comentary)
+
+        if(this.quantity == 0){
+            this.head = new_comment;
+            this.buttom = new_comment;
+            this.quantity++;
+        }else{
+            this.buttom.next = new_comment;
+            this.buttom = new_comment;
+            this.quantity++;
+        }
+    }
+
+    show(position){
+        if(this.head == null){
+            return "Be the first one in comment!"
+        }
+
+        movie = this.head;
+        for(var i = 0; i < this.quantity; i++){
+            if(i == position){
+                return movie;
+            }
+            movie = movie.next;
+        }
+    }
+
+}
+//END COMMENT SECTION
+
+//BEGIN MOVIE AVL TREE
+class movie_node{
+    constructor(_id, _name, _description, _punctuation, _pages, _category){
+        this.id = _id;
+        this.name = _name;
+        this.description = _description;
+        this.punctuation = _punctuation;
+        this.pages = _pages;
+        this.category = _category;
+        this.coments = new comentary_list();
+        this.left = null;
+        this.right = null;
+        this.height = 0;
+    }
+}
+
+class movie_avl_tree{
+    constructor(){
+        this.root = null;
+    }
+
+    insert(_id, _name, _description, _punctuation, _pages, _category){
+        let new_movie = new movie_node(_id, _name, _description, _punctuation, _pages, _category);
+        
+        if(this.root == null){
+            this.root = new_movie;
+            return;
+        }
+        //Calling the recursion function for insertion
+        this.root = this.insert_node(this.root, new_movie);
+    }
+    //Recursive function that inserts a node
+    insert_node(actual_root, new_movie){
+        //Base Case:
+        if(actual_root == null){
+            actual_root = new_movie;
+            return actual_root;
+        }
+        //Traveling between childs:
+        if(new_movie.id < actual_root.id){
+            //Inserting the node recursively
+            actual_root.left = this.insert_node(actual_root.left, new_movie); 
+            if(this.height(actual_root.right) - this.height(actual_root.left) == -2){
+                //We are in a left situation, now we have to determinate if it is a simple or double rotation
+                if(new_movie.id < actual_root.left.id){
+                    //We have concluded that it is a simple rotation
+                    actual_root = this.left_left_rotation(actual_root);
+                }else{
+                    //We have concluded that it is a double rotation
+                    actual_root = this.left_right_rotation(actual_root);
+                }
+            } 
+            
+        }
+        
+        if(new_movie.id > actual_root.id){
+            //Inserting the node recursively
+            actual_root.right = this.insert_node(actual_root.right, new_movie); 
+            if(this.height(actual_root.right) - this.height(actual_root.left) == 2){
+                //We are in a right situation, now we have to determinate if it is a simple or double rotation
+                if(new_movie.id > actual_root.right.id){
+                    //We have concluded that it is a simple rotation
+                    actual_root = this.right_right_rotation(actual_root);
+                }else{
+                    //We have concluded that it is a double rotation
+                    actual_root = this.right_left_rotation(actual_root);
+                }
+            }            
+        }
+        actual_root.height = this.max_height(this.height(actual_root.right), this.height(actual_root.left)) +1;
+        return actual_root;
+    }
+
+    //Getting the height of a simple node;
+    //Cleaner looking code purposses
+    height(node){
+        if(node == null){
+            return -1;
+        }
+        return node.height;
+    }
+
+    //Next we will make the comparison of the heights
+    //Just for swapping purposses during rotations
+    max_height(h1, h2){
+        if(h2 >= h1){
+            return h2;
+        }
+        return h1;
+    }
+
+    //Rotations:
+    //Covering all the situations required to make an efficient rotation
+    left_left_rotation(current_node){
+        let left_node = current_node.left;
+        current_node.left = left_node.right;
+        left_node.right = current_node;
+        current_node.height = this.max_height(this.height(current_node.left), this.height(current_node.right)) + 1;
+        left_node.height = this.max_height(current_node.height, this.height(current_node.left)) + 1;
+        return left_node;
+
+    }
+
+    right_right_rotation(current_node){
+        let right_node = current_node.right;
+        current_node.right = right_node.left;
+        right_node.left = current_node;
+        current_node.height = this.max_height(this.height(current_node.left), this.height(current_node.right)) + 1;
+        right_node.height = this.max_height(current_node.height, this.height(current_node.right)) + 1;
+        return right_node;
+    }
+
+    left_right_rotation(node){
+        node.left = this.right_right_rotation(node.left);
+        let aux = this.left_left_rotation(node);
+        return aux;
+    }
+
+    right_left_rotation(node){
+        node.right = this.left_left_rotation(node.right);;
+        let aux = this.right_right_rotation(node);
+        return aux;
+    }
+
+    pre_order(actual_root){
+        //Case base
+        if(actual_root != null){
+            console.log(actual_root.id, actual_root.name);
+            this.pre_order(actual_root.left);
+            this.pre_order(actual_root.right);
+        }
+    }
+
+    in_order(actual_root){
+        //Case base
+        if(actual_root != null){
+            this.in_order(actual_root.left);
+            console.log(actual_root.id, actual_root.name);
+            this.in_order(actual_root.right);
+        }
+    }
+
+    post_order(actual_root){
+        //Case base
+        if(actual_root != null){
+            this.post_order(actual_root.left);
+            this.post_order(actual_root.right);
+            console.log(actual_root.id, actual_root.name);
+        }
+    }
+
+    reverse_order(actual_root){
+        //Case base
+        if(actual_root != null){
+            this.reverse_order(actual_root.right);
+            console.log(actual_root.id, actual_root.name);
+            this.reverse_order(actual_root.left);
+        } 
+    }
+
+    find_movie(_id){
+        if(this.root == null){
+            return "There is no element in movie tree"
+        }
+
+        let current_node = this.root;
+        while(current_node != null){
+            if(current_node.id > _id){
+                current_node = current_node.left;
+                continue;
+            }
+            if(current_node.id < _id){
+                current_node = current_node.right;
+                continue;
+            }
+            
+            return current_node;
+        }
+        return "NOT FOUND";
+    }
+
+    create_dot(){
+        let text ="digraph AVL{label=\"Clients\";";
+        text += this.nodes_dot(this.root);
+        text += "\n";
+        text += this.linking_nodes_dot(this.root);
+        text += "\n}";
+        console.log(text)
+        d3.select("#movies_graph").graphviz()
+        .renderDot(text)
+    }
+    //Creating nodes inorder way
+    nodes_dot(actual_root){
+        let nodes = "\n";
+        if(actual_root != null){
+            nodes += this.nodes_dot(actual_root.left);
+            nodes += "n"+actual_root.id+"[label =\"ID: "+actual_root.id+ " \n Movie Name: " + actual_root.name +" \n Description: " + actual_root.description +" \n Punctuation: " + actual_root.punctuation +" \n Pages: " + actual_root.pages +"\"]\n";
+            nodes += this.nodes_dot(actual_root.right);
+        }
+        return nodes;
+    }
+
+    linking_nodes_dot(actual_root){
+        let link = "";
+        if(actual_root != null){
+            link += this.linking_nodes_dot(actual_root.left)
+            link += this.linking_nodes_dot(actual_root.right)
+            if(actual_root.left != null){
+                link += "n"+actual_root.id + "-> n"+actual_root.left.id+"\n";
+            }
+            if(actual_root.right != null){
+                link += "n"+actual_root.id + "-> n"+actual_root.right.id+"\n";
+            }
+        }
+        return link;
+
+    }
+}
+//END MOVIE AVL TREE
+
+//BEGIN: Movie ordered by name
+//It´s only function is to get the information in alphabetical order
+class ordered_movie_node{
+    constructor(_id, _name){
+        this.id = _id;
+        this.name = _name;
+        this.left = null;
+        this.right = null;
+        this.height = 0;
+    }
+}
+
+class ordered_movie_avl_tree{
+    constructor(){
+        this.root = null;
+    }
+
+    insert(_id, _name){
+        let new_movie = new ordered_movie_node(_id, _name);
+        
+        if(this.root == null){
+            this.root = new_movie;
+            return;
+        }
+        //Calling the recursion function for insertion
+        this.root = this.insert_node(this.root, new_movie);
+    }
+    //Recursive function that inserts a node
+    insert_node(actual_root, new_movie){
+        //Base Case:
+        if(actual_root == null){
+            actual_root = new_movie;
+            return actual_root;
+        }
+        //Traveling between childs:
+        console.log(new_movie.name,"thius is the name", actual_root.name);
+        console.log(new_movie.name < actual_root.name)
+        if(new_movie.name < actual_root.name){
+            //Inserting the node recursively
+            actual_root.left = this.insert_node(actual_root.left, new_movie); 
+            if(this.height(actual_root.right) - this.height(actual_root.left) == -2){
+                //We are in a left situation, now we have to determinate if it is a simple or double rotation
+                if(new_movie.name < actual_root.left.name){
+                    //We have concluded that it is a simple rotation
+                    actual_root = this.left_left_rotation(actual_root);
+                }else{
+                    //We have concluded that it is a double rotation
+                    actual_root = this.left_right_rotation(actual_root);
+                }
+            } 
+            
+        }
+        
+        if(new_movie.name > actual_root.name){
+            //Inserting the node recursively
+            actual_root.right = this.insert_node(actual_root.right, new_movie); 
+            if(this.height(actual_root.right) - this.height(actual_root.left) == 2){
+                //We are in a right situation, now we have to determinate if it is a simple or double rotation
+                if(new_movie.name > actual_root.right.name){
+                    //We have concluded that it is a simple rotation
+                    actual_root = this.right_right_rotation(actual_root);
+                }else{
+                    //We have concluded that it is a double rotation
+                    actual_root = this.right_left_rotation(actual_root);
+                }
+            }            
+        }
+        actual_root.height = this.max_height(this.height(actual_root.right), this.height(actual_root.left)) +1;
+        return actual_root;
+    }
+
+    //Getting the height of a simple node;
+    //Cleaner looking code purposses
+    height(node){
+        if(node == null){
+            return -1;
+        }
+        return node.height;
+    }
+
+    //Next we will make the comparison of the heights
+    //Just for swapping purposses during rotations
+    max_height(h1, h2){
+        if(h2 >= h1){
+            return h2;
+        }
+        return h1;
+    }
+
+    //Rotations:
+    //Covering all the situations required to make an efficient rotation
+    left_left_rotation(current_node){
+        let left_node = current_node.left;
+        current_node.left = left_node.right;
+        left_node.right = current_node;
+        current_node.height = this.max_height(this.height(current_node.left), this.height(current_node.right)) + 1;
+        left_node.height = this.max_height(current_node.height, this.height(current_node.left)) + 1;
+        return left_node;
+
+    }
+
+    right_right_rotation(current_node){
+        let right_node = current_node.right;
+        current_node.right = right_node.left;
+        right_node.left = current_node;
+        current_node.height = this.max_height(this.height(current_node.left), this.height(current_node.right)) + 1;
+        right_node.height = this.max_height(current_node.height, this.height(current_node.right)) + 1;
+        return right_node;
+    }
+
+    left_right_rotation(node){
+        node.left = this.right_right_rotation(node.left);
+        let aux = this.left_left_rotation(node);
+        return aux;
+    }
+
+    right_left_rotation(node){
+        node.right = this.left_left_rotation(node.right);;
+        let aux = this.right_right_rotation(node);
+        return aux;
+    }
+
+
+    //Required to get the movie information in order
+    in_order(actual_root, movie_avl_tree){
+        //Case base
+        if(actual_root != null){
+            this.in_order(actual_root.left, movie_avl_tree);
+            console.log(this.find_movie_id_avl(actual_root.name, movie_avl_tree));
+            this.in_order(actual_root.right, movie_avl_tree);
+        }
+    }
+
+    //Required to get the movie information in reverse order
+    reverse_order(actual_root, movie_avl_tree){
+        //Case base
+        if(actual_root != null){
+            this.reverse_order(actual_root.right, movie_avl_tree);
+            console.log(this.find_movie_id_avl(actual_root.name, movie_avl_tree));
+            this.reverse_order(actual_root.left, movie_avl_tree);
+        } 
+    }
+
+    find_movie_by_name(_name){
+        if(this.root == null){
+            return "There is no element in movie tree"
+        }
+
+        let current_node = this.root;
+        while(current_node != null){
+            if(current_node.name > _name){
+                current_node = current_node.left;
+                continue;
+            }
+            if(current_node.name < _name){
+                current_node = current_node.right;
+                continue;
+            }
+            
+            return current_node;
+        }
+        return "NOT FOUND";
+    }
+
+    find_movie_id_avl(name, movie_avl_tree){
+        return movie_avl_tree.find_movie(this.find_movie_by_name(name).id);
+
+    }
+}
+//END: Movie ordered by name
 
 //Sha256 code Code by: geraintluff Link: https://geraintluff.github.io/sha256/
 function sha256(ascii) {
@@ -602,7 +1060,8 @@ function load_movies(){
   
       for (const i in _data) {
         let data = _data[i];
-        console.log(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria)
+        id_movies_avl.insert(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria);
+        alphabetical_movie_avl.insert(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria);
       }
     };
     reader.readAsText(file);
@@ -637,6 +1096,10 @@ function graph_actor(){
     actor_tree.create_dot()
 }
 
+function graph_movies(){
+    id_movies_avl.create_dot()
+}
+
 function pre_order(){
     console.log("Pre order");
     actor_tree.eliminate_div(actor_tree.root);
@@ -659,9 +1122,15 @@ function post_order(){
 //BEGIN: Creating user list
 var user_list = new user_List();
 var actor_tree = new actor_binary_search_tree();
+var id_movies_avl = new movie_avl_tree();
+var alphabetical_movie_avl = new ordered_movie_avl_tree();
 user_list.insert("EDD", "Oscar Armi",sha256("12345678"),"2354168452525","12345678", true);
 user_list.insert("ED", "Oscar Armi", sha256("12345678"),"2354168452525","12345678", false);
 //END: Creating user list
+
+
+
+
 
 
 
