@@ -235,7 +235,7 @@ class actor_binary_search_tree{
         }
     
         create_dot(){
-            let text ="digraph BinarySearchTree{label=\"Clients\";";
+            let text ="digraph BinarySearchTree{label=\"Clients\";\nnode [shape=box];\n";
             text += this.nodes_dot(this.root);
             text += "\n";
             text += this.linking_nodes_dot(this.root);
@@ -504,7 +504,7 @@ class movie_avl_tree{
     }
 
     create_dot(){
-        let text ="digraph AVL{label=\"Clients\";";
+        let text ="digraph AVL{label=\"Clients\";\nnode [shape=box];\n";
         text += this.nodes_dot(this.root);
         text += "\n";
         text += this.linking_nodes_dot(this.root);
@@ -1066,6 +1066,7 @@ function load_movies(){
         id_movies_avl.insert(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria);
         alphabetical_movie_avl.insert(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria);
       }
+      graph_movies();
     };
     reader.readAsText(file);
 }
@@ -1092,15 +1093,14 @@ function load_categories(){
 }
 //END: JSON load for Categories
 function graph_user(){
-    console.log(user_list)
-    user_list.graph()
+    user_list.graph();
 }
 function graph_actor(){
-    actor_tree.create_dot()
+    actor_tree.create_dot();
 }
 
 function graph_movies(){
-    id_movies_avl.create_dot()
+    id_movies_avl.create_dot();
 }
 
 function pre_order(){
@@ -1134,9 +1134,9 @@ function post_order(){
     var pre = document.getElementById("pre_order_actor");
     var in_d = document.getElementById("in_order_actor");
     var post = document.getElementById("post_order_actor");
-    post_order_actor.style.display = "block";
-    pre_order_actor.style.display = "none";
-    in_order_actor.style.display = "none";
+    post.style.display = "block";
+    pre.style.display = "none";
+    in_d.style.display = "none";
 
 }
 //END: Dynamic web
@@ -1149,6 +1149,57 @@ var alphabetical_movie_avl = new ordered_movie_avl_tree();
 user_list.insert("EDD", "Oscar Armi",sha256("12345678"),"2354168452525","12345678", true);
 user_list.insert("ED", "Oscar Armi", sha256("12345678"),"2354168452525","12345678", false);
 //END: Creating user list
+
+//BEGIN: Download graphs:
+function download_user_graph(){
+    const screenshot_target = document.getElementById("user_graph");
+    html2canvas(screenshot_target).then((canvas) => {
+        const base64image = canvas.toDataURL("image/png");
+        var anchor = document.createElement('a');
+        anchor.setAttribute("href", base64image);
+        anchor.setAttribute("download", "user_graph.png");
+        anchor.click();
+        anchor.remove();
+    })
+}
+
+function download_actors_graph(){
+    const screenshot_target = document.getElementById("actor_graph");
+    html2canvas(screenshot_target).then((canvas) => {
+        const base64image = canvas.toDataURL("image/png");
+        var anchor = document.createElement('a');
+        anchor.setAttribute("href", base64image);
+        anchor.setAttribute("download", "actor_graph.png");
+        anchor.click();
+        anchor.remove();
+    })
+}
+
+function download_movies_graph(){
+    const screenshot_target = document.getElementById("movies_graph");
+    html2canvas(screenshot_target).then((canvas) => {
+        const base64image = canvas.toDataURL("image/png");
+        var anchor = document.createElement('a');
+        anchor.setAttribute("href", base64image);
+        anchor.setAttribute("download", "movies_graph.png");
+        anchor.click();
+        anchor.remove();
+    })
+}
+function download_categories_graph(){
+    const screenshot_target = document.getElementById("categories_graph");
+    html2canvas(screenshot_target).then((canvas) => {
+        const base64image = canvas.toDataURL("image/png");
+        var anchor = document.createElement('a');
+        anchor.setAttribute("href", base64image);
+        anchor.setAttribute("download", "categories_graph.png");
+        anchor.click();
+        anchor.remove();
+    })
+}
+//END: Download graphs
+
+
 
 
 

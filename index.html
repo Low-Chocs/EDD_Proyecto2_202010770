@@ -103,32 +103,36 @@
 
 
     <div id="user_admin_div">
-        <input type="file" id="user_json">
         <button onclick="graph_user()">Graficar Usuarios</button>
         <button onclick="load_user()">Cargar Usuarios</button>
+        <button onclick="download_user_graph()">Descargar Usuarios</button>
+        <input type="file" id="user_json">
         <div id="user_graph"></div>
     </div>
 
 
 
     <div id="actor_admin_div">
-        <input type="file" id="actor_json">
         <button onclick="graph_actor()">Graficar Actores</button>
         <button onclick="load_actors()">Cargar Actores</button>
+        <button onclick="download_actors_graph()">Descargar Actores</button>
+        <input type="file" id="actor_json">
         <div id="actor_graph"></div>
     </div>
 
     <div id="movies_admin_div">
-        <input type="file" id="movies_json">
         <button onclick="graph_movies()">Graficar Películas</button>
         <button onclick="load_movies()">Cargar Películas</button>
+        <button onclick="download_movies_graph()">Descargar Películas</button>
+        <input type="file" id="movies_json">
         <div id="movies_graph"></div>
     </div>
 
     <div id="categories_admin_div">
-        <input type="file" id="categories_json">
         <button onclick="">Graficar Categorías</button>
         <button onclick="load_actors()">Cargar Categorías</button>
+        <button onclick="download_categories_graph()">Descargar Categorias</button>
+        <input type="file" id="categories_json">
         <div id="categories_graph"></div>
     </div>
 
@@ -137,5 +141,6 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>   
 <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="main.js"></script>
 </html>
