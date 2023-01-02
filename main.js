@@ -1016,6 +1016,33 @@ class Nodo{
         .renderDot(codigodot)
     }
 
+    edit_html(){
+
+        for(var i = 0; i < this.size; i++){
+            for(var j = 0; j < this.table[i].getSize(); j++){
+                if(this.table[i].get_element(j) != null){
+                    var table_element = this.table[i].get_element(j) ;
+
+                    var parent_div = document.getElementById("categories_user_div");
+                    var children_div = document.createElement("div");
+                    var h2_id = document.createElement("h2");
+                    var _id = document.createTextNode("Id: "+table_element.id);
+                    var h2_category = document.createElement("h2");
+                    var _category = document.createTextNode("Categoría: "+table_element.category);
+                    
+                    h2_category.appendChild(_category);
+                    h2_id.appendChild(_id);
+                    children_div.appendChild(h2_id);
+                    children_div.appendChild(h2_category);
+                    parent_div.appendChild(children_div);
+
+
+                }
+            }
+        }
+       
+    }
+
   
   }
 //End Hash table
@@ -1141,9 +1168,12 @@ function log_to_user_div(){
     var div_login = document.getElementById('login_div');
     var div_user = document.getElementById('user_div');
     var div_movies = document.getElementById("movies_user_div");
+    var div_categories = document.getElementById("categories_user_div");
+
     div_login.style.display = "none";    
     div_user.style.display = "block";
     div_movies.style.display = "block";
+    div_categories.style.display = "none"; 
 }
 //User -> log
 function user_div_to_log(){
@@ -1151,10 +1181,13 @@ function user_div_to_log(){
     var log = document.getElementById('login_div');
     var div_movies = document.getElementById("movies_user_div");
     var div_actor = document.getElementById("actor_user_div");
+    var div_categories = document.getElementById("categories_user_div");
+
     div_user.style.display = "none"; 
     log.style.display = "block";
     div_actor.style.display = "none";
     div_movies.style.display = "none";
+    div_categories.style.display = "none";
 }
 //log -> admin
 function log_to_admin_div(){
@@ -1164,6 +1197,7 @@ function log_to_admin_div(){
     div_login.style.display = "none";    
     div_admin.style.display = "block";
     div_user.style.display = "block";
+    
 }
 //Admin -> log
 function admin_div_to_log(){
@@ -1234,27 +1268,33 @@ function categories_admin_nav(){
 }
 
 function actors_user_nav(){
-    //var div_user = document.getElementById('user_user_div');
     var div_actor = document.getElementById("actor_user_div");
     var div_movies = document.getElementById("movies_user_div");
-    //var div_categories = document.getElementById("categories_user_div");
+    var div_categories = document.getElementById("categories_user_div");
 
-    //div_user.style.display = "none";
     div_actor.style.display = "block"; 
     div_movies.style.display = "none";
-    //div_categories.style.display = "block"; 
+    div_categories.style.display = "none"; 
 }
 
 function movies_user_nav(){
-    //var div_user = document.getElementById('user_user_div');
     var div_actor = document.getElementById("actor_user_div");
     var div_movies = document.getElementById("movies_user_div");
-    //var div_categories = document.getElementById("categories_user_div");
+    var div_categories = document.getElementById("categories_user_div");
 
-    //div_user.style.display = "none";
     div_actor.style.display = "none"; 
     div_movies.style.display = "block";
-    //div_categories.style.display = "block"; 
+    div_categories.style.display = "none"; 
+}
+
+function categories_user_nav(){
+    var div_actor = document.getElementById("actor_user_div");
+    var div_movies = document.getElementById("movies_user_div");
+    var div_categories = document.getElementById("categories_user_div");
+
+    div_actor.style.display = "none"; 
+    div_movies.style.display = "none";
+    div_categories.style.display = "block"; 
 }
 //END NAVS ADMIN
 //BEGIN: Dynamic web
@@ -1413,6 +1453,7 @@ function load_categories(){
         let data = _data[i];
         categories.insert(data.id_categoria, data.company)
       }
+      categories.edit_html();
       categories.graph();
     };
     reader.readAsText(file);
@@ -1427,6 +1468,9 @@ function graph_actor(){
 
 function graph_movies(){
     id_movies_avl.create_dot();
+}
+function graph_categories(){
+    categories.graph();
 }
 
 function pre_order(){
