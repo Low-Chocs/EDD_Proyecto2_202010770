@@ -1689,7 +1689,7 @@ function download_categories_graph() {
 var index2 = 0;
 function merkle_Tree() {
     var m = new merkle_tree()
-    m.add("Figueroa", "Mendez Becker")
+    m.add("Jason", "Rocky Balboa")
     m.auth()
     m.dot = '{node [shape=box];'
     m.dotgen(m.tophash)
