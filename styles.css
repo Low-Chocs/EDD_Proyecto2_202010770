@@ -119,6 +119,13 @@ input:hover {
     display: none;
 }
 
+#movies_user_div{
+    display: none;
+}
+
+#reverse_movie{
+    display: none;
+}
 
 
 #user_admin_div{
@@ -142,6 +149,11 @@ input:hover {
 .user_nav{
     display: flex;
     justify-content: space-between;
+
+}
+.comment{
+    padding: 0.5%;
+    margin-top:0% ;
 
 }
 

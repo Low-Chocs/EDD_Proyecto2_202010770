@@ -73,7 +73,7 @@
     <div id="user_div">
         <header>
             <nav class="user_nav">
-                <h3 onclick="">Canciones</h3>
+                <h3 onclick="movies_user_nav()">Películas</h3>
                 <h3 onclick="">Playlist</h3>
                 <h3 onclick="actors_user_nav()">Actores</h3>
                 <h3 onclick="">Amigos y Bloqueados</h3>
@@ -81,6 +81,19 @@
                 <h3 onclick="user_div_to_log()">Cerrar Sesión</h3>
             </nav>
         </header>
+    </div>
+
+    <div id="movies_user_div">
+        <button onclick="alphabetical_order()">Orden Alfabético</button>
+        <button onclick="reverse_order()">Orden reverso</button>
+
+        <div id="alphabetical_movie">
+            
+        </div>
+        <div id="reverse_movie">
+            
+        </div>
+        
     </div>
 
     <div id="actor_user_div">
@@ -135,6 +148,8 @@
         <input type="file" id="categories_json">
         <div id="categories_graph"></div>
     </div>
+
+
 
 
 </body>

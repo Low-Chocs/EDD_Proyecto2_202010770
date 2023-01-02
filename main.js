@@ -35,7 +35,7 @@ class user_List{
     }
 
     session_User(){
-        return this.active_user;
+        return this.session_user;
     }
 
     show(){
@@ -51,7 +51,7 @@ class user_List{
         //Looking up the user 
         for(var i = 0; i< this.quantity; i++){
             if(aux.username == user && aux.password == pass){
-                this.session_User = aux;
+                this.session_user = aux;
                 return aux;
             }
             aux = aux.next;
@@ -324,11 +324,12 @@ class comentary_list{
 
 //BEGIN MOVIE AVL TREE
 class movie_node{
-    constructor(_id, _name, _description, _punctuation, _pages, _category){
+    constructor(_id, _name, _description, _punctuation, _price, _pages, _category){
         this.id = _id;
         this.name = _name;
         this.description = _description;
         this.punctuation = _punctuation;
+        this.price = _price;
         this.pages = _pages;
         this.category = _category;
         this.coments = new comentary_list();
@@ -343,8 +344,8 @@ class movie_avl_tree{
         this.root = null;
     }
 
-    insert(_id, _name, _description, _punctuation, _pages, _category){
-        let new_movie = new movie_node(_id, _name, _description, _punctuation, _pages, _category);
+    insert(_id, _name, _description, _punctuation, _price, _pages, _category){
+        let new_movie = new movie_node(_id, _name, _description, _punctuation, _price, _pages, _category);
         
         if(this.root == null){
             this.root = new_movie;
@@ -670,7 +671,85 @@ class ordered_movie_avl_tree{
         //Case base
         if(actual_root != null){
             this.in_order(actual_root.left, movie_avl_tree);
-            console.log(this.find_movie_id_avl(actual_root.name, movie_avl_tree));
+            //Getting the movie
+            var movie = this.find_movie_id_avl(actual_root.name, movie_avl_tree);
+            //Information
+            var parent_div = document.getElementById("alphabetical_movie");
+            var children_div = document.createElement("div");
+            var h2_name = document.createElement("h2");
+            var _name = document.createTextNode(movie.name +": "+movie.punctuation+" Estrellas");
+            var h3_price = document.createElement("h3");
+            var _price = document.createTextNode("Precio: Q."+movie.price);
+            var p_description = document.createElement("p");
+            var _description = document.createTextNode("Description: "+movie.description);
+            var p_rank = document.createElement("p");
+            var _rank = document.createTextNode("Rankea!");
+            var array = [1,2,3,4,5];
+            var select_list = document.createElement("select");
+            select_list.id = "mySelect";
+            h3_price.appendChild(_price);
+            h2_name.appendChild(_name);
+            p_description.appendChild(_description);
+            children_div.appendChild(h2_name);
+            children_div.appendChild(h3_price);
+            children_div.appendChild(p_description);
+            parent_div.appendChild(children_div);
+            p_rank.appendChild(_rank)
+            parent_div.appendChild(p_rank);
+            parent_div.appendChild(select_list);
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                select_list.appendChild(option);
+            }
+            //Information
+            //Comments
+            var comment_div = document.createElement("div");
+            var h4_comment = document.createElement("h4");
+            comment_div.id = movie.id +"_comments1";
+            var _comment = document.createTextNode("Comentarios:");
+            h4_comment.appendChild(_comment);
+            comment_div.appendChild(h4_comment);
+            parent_div.appendChild(comment_div);
+            //Comments
+
+            //Inputs
+            var inputs_div = document.createElement("div");
+            var input_comment = document.createElement("input");
+            input_comment.setAttribute("type","text");
+            input_comment.id = movie.id +"_comment1";
+            input_comment.classList = "comment";
+            inputs_div.appendChild(input_comment);
+            var rent_button = document.createElement("button");
+            rent_button.textContent = "Rentar";
+            rent_button.classList = "comment";
+            rent_button.onclick = function(){
+                console.log(movie.id);
+                
+            }
+            var comment_button = document.createElement("button");
+            comment_button.textContent = "Comentar";
+            comment_button.classList = "comment";
+            comment_button.onclick = function(){
+                var commentary1 = document.getElementById(movie.id +"_comments1");
+                var commentary2 = document.getElementById(movie.id +"_comments2");
+                var p_comment = document.createElement("p");
+                var p_comment2 = document.createElement("p");
+                var new_comment = document.createTextNode(user_list.session_user.username+": "+document.getElementById(movie.id +"_comment1").value);
+                var new_comment2 = document.createTextNode(user_list.session_user.username+": "+document.getElementById(movie.id +"_comment1").value);
+                p_comment.appendChild(new_comment);
+                p_comment2.appendChild(new_comment2);
+                commentary1.appendChild(p_comment);
+                console.log(commentary1);
+                commentary2.appendChild(p_comment2);
+                
+            }
+            inputs_div.appendChild(rent_button);
+            inputs_div.appendChild(comment_button);
+            parent_div.appendChild(inputs_div);
+            //Inputs
+
             this.in_order(actual_root.right, movie_avl_tree);
         }
     }
@@ -680,7 +759,84 @@ class ordered_movie_avl_tree{
         //Case base
         if(actual_root != null){
             this.reverse_order(actual_root.right, movie_avl_tree);
-            console.log(this.find_movie_id_avl(actual_root.name, movie_avl_tree));
+            //Getting the movie
+            var movie = this.find_movie_id_avl(actual_root.name, movie_avl_tree);
+            //Information
+            var parent_div = document.getElementById("reverse_movie");
+            var children_div = document.createElement("div");
+            var h2_name = document.createElement("h2");
+            var _name = document.createTextNode(movie.name +": "+movie.punctuation+" Estrellas");
+            var h3_price = document.createElement("h3");
+            var _price = document.createTextNode("Precio: Q."+movie.price);
+            var p_description = document.createElement("p");
+            var _description = document.createTextNode("Description: "+movie.description);
+            var p_rank = document.createElement("p");
+            var _rank = document.createTextNode("Rankea!");
+            var array = [1,2,3,4,5];
+            var select_list = document.createElement("select");
+            select_list.id = "mySelect";
+            h3_price.appendChild(_price);
+            h2_name.appendChild(_name);
+            p_description.appendChild(_description);
+            children_div.appendChild(h2_name);
+            children_div.appendChild(h3_price);
+            children_div.appendChild(p_description);
+            parent_div.appendChild(children_div);
+            p_rank.appendChild(_rank)
+            parent_div.appendChild(p_rank);
+            parent_div.appendChild(select_list);
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                select_list.appendChild(option);
+            }
+            //Information
+            //Comments
+            var comment_div = document.createElement("div");
+            var h4_comment = document.createElement("h4");
+            comment_div.id = movie.id +"_comments2";
+            var _comment = document.createTextNode("Comentarios:");
+            h4_comment.appendChild(_comment);
+            comment_div.appendChild(h4_comment);
+            parent_div.appendChild(comment_div);
+            //Comments
+
+            //Inputs
+            var inputs_div = document.createElement("div");
+            var input_comment = document.createElement("input");
+            input_comment.setAttribute("type","text");
+            input_comment.id = movie.id +"_comment2";
+            input_comment.classList = "comment";
+            inputs_div.appendChild(input_comment);
+            var rent_button = document.createElement("button");
+            rent_button.textContent = "Rentar";
+            rent_button.classList = "comment";
+            rent_button.onclick = function(){
+                console.log(movie.id);
+                
+            }
+            var comment_button = document.createElement("button");
+            comment_button.textContent = "Comentar";
+            comment_button.classList = "comment";
+            comment_button.onclick = function(){
+                var commentary1 = document.getElementById(movie.id +"_comments1");
+                var commentary2 = document.getElementById(movie.id +"_comments2");
+                var p_comment = document.createElement("p");
+                var p_comment2 = document.createElement("p");
+                var new_comment = document.createTextNode(user_list.session_user.username+": "+document.getElementById(movie.id +"_comment2").value);
+                var new_comment2 = document.createTextNode(user_list.session_user.username+": "+document.getElementById(movie.id +"_comment2").value);
+                p_comment.appendChild(new_comment);
+                p_comment2.appendChild(new_comment2);
+                commentary1.appendChild(p_comment);
+                console.log(commentary1);
+                commentary2.appendChild(p_comment2);
+                
+            }
+            inputs_div.appendChild(rent_button);
+            inputs_div.appendChild(comment_button);
+            parent_div.appendChild(inputs_div);
+            //Inputs
             this.reverse_order(actual_root.left, movie_avl_tree);
         } 
     }
@@ -712,6 +868,157 @@ class ordered_movie_avl_tree{
     }
 }
 //END: Movie ordered by name
+
+//Begin Hash table
+class Nodo{
+    constructor(_id, _category){
+        this.id = _id;
+        this.category = _category;
+        this.next = null
+    }
+  }
+  
+  class Lista{
+    constructor(){
+        this.head = null
+        this.size = 0;
+    }
+  
+    //metodos de la lista
+    //insertar
+    insert(_id, _category){
+      this.size++;
+      var tempo = new Nodo(_id, _category)
+      tempo.next = this.head
+      this.head = tempo
+    }
+    //mostrar 
+    printList(){
+      var temporal = this.head
+      while(temporal!=null){
+          console.log(temporal.id)
+          temporal = temporal.next
+      }
+    }
+  
+    getSize(){
+      return this.size;
+    }
+  
+    isEmpty(){
+      return this.head === null ; 
+    }
+
+    get_element(value){
+        var aux = this.head;
+        for(var i = 0; i< this.size; i++){
+            if(value == i ){
+                return aux;
+            }
+            aux = aux.next;
+        }
+    }
+  }
+  
+  class hash_table{
+    constructor(size){
+      this.amount =0;
+      this.size =  size;
+      this.table = [];
+      for(let i = 0;i < size ; i++){
+        this.table.push(new Lista())
+      }
+    }
+  
+    insert(_id, _category){
+      var index = this.functionHash(_id);
+      if(this.table[index].isEmpty()){
+        this.amount++;
+      }
+      this.table[index].insert(_id, _category);
+      this.rehashing()
+    }
+  
+    functionHash(data){
+      return data % this.size;
+    }
+  
+    rehashing(){
+      var porcentaje =this.amount/this.size
+      if(porcentaje>0.75){
+        var temp =this.table;
+        var tempSize = this.size
+        this.size = this.amount*5
+        this.table = []
+        for(let i = 0;i < this.size ; i++){
+          this.table.push(new Lista())
+        }
+        this.amount =0;
+        for(let i = 0;i < tempSize ; i++){
+          if(!temp[i].isEmpty()){
+            var nodo = temp[i].head;
+            while(nodo!=null){
+              this.insert(nodo.id, nodo.category);
+              nodo = nodo.next
+            }
+          }
+        }
+  
+      }
+      console.log(this.table,porcentaje);
+  
+    }
+
+    show(){
+        for(var i = 0; i < this.size; i++){
+            if(this.table[i].head != null){
+                if(this.table[i].printList() != null){
+                    console.log("-->"+this.table[i].printList());
+                }
+                
+                
+            }
+            console.log("----------------->");
+
+        }
+    }
+
+    graph(){
+        var codigodot = "digraph G{\nlabel=\" Categorías \";\nnode [shape=box];\n ";
+
+        for(var i=0; i<this.size;i++){
+            codigodot += "U"+i+"[label = \""+i+"\" width = 1.5 style = filled, fillcolor = bisque1, group = 1 ];\n";
+        }
+
+        if(this.size > 0){
+            for(var i = 0; i < this.size - 1; i++){
+                codigodot += "U"+i+"->"+"U"+(i+1)+";\n";        
+        }
+
+
+        var counter2 = 0;
+        for(var i = 0; i < this.size; i++){
+            for(var j = 0; j < this.table[i].getSize(); j++){
+                codigodot += "S"+counter2+"[label = \""+this.table[i].get_element(j).id+","+this.table[i].get_element(j).category+"\" width = 1.5 style = filled, fillcolor = bisque1, group = 1 ];\n";
+                
+                if(j == 0){
+                    codigodot += "U"+(i)+"->S"+counter2+";\n";
+                    codigodot += "{rank = same; U"+i+" S"+counter2+"}\n"
+                }
+                counter2++;
+            }
+        }
+
+        }
+        codigodot+="}"
+        console.log(codigodot)
+        d3.select("#user_graph").graphviz()
+        .renderDot(codigodot)
+    }
+
+  
+  }
+//End Hash table
 
 //Sha256 code Code by: geraintluff Link: https://geraintluff.github.io/sha256/
 function sha256(ascii) {
@@ -833,17 +1140,21 @@ function new_user_to_log_div(){
 function log_to_user_div(){
     var div_login = document.getElementById('login_div');
     var div_user = document.getElementById('user_div');
+    var div_movies = document.getElementById("movies_user_div");
     div_login.style.display = "none";    
     div_user.style.display = "block";
-    actor_tree.pre_order(actor_tree.root);
+    div_movies.style.display = "block";
 }
 //User -> log
 function user_div_to_log(){
     var div_user = document.getElementById('user_div');
     var log = document.getElementById('log_div');
+    var div_movies = document.getElementById("movies_user_div");
+    var div_actor = document.getElementById("actor_user_div");
     div_user.style.display = "none"; 
     log.style.display = "block";
     div_actor.style.display = "none";
+    div_movies.style.display = "none";
 }
 //log -> admin
 function log_to_admin_div(){
@@ -925,12 +1236,24 @@ function categories_admin_nav(){
 function actors_user_nav(){
     //var div_user = document.getElementById('user_user_div');
     var div_actor = document.getElementById("actor_user_div");
-    //var div_movies = document.getElementById("movies_user_div");
+    var div_movies = document.getElementById("movies_user_div");
     //var div_categories = document.getElementById("categories_user_div");
 
     //div_user.style.display = "none";
     div_actor.style.display = "block"; 
-    //div_movies.style.display = "none";
+    div_movies.style.display = "none";
+    //div_categories.style.display = "block"; 
+}
+
+function movies_user_nav(){
+    //var div_user = document.getElementById('user_user_div');
+    var div_actor = document.getElementById("actor_user_div");
+    var div_movies = document.getElementById("movies_user_div");
+    //var div_categories = document.getElementById("categories_user_div");
+
+    //div_user.style.display = "none";
+    div_actor.style.display = "none"; 
+    div_movies.style.display = "block";
     //div_categories.style.display = "block"; 
 }
 //END NAVS ADMIN
@@ -1067,6 +1390,8 @@ function load_movies(){
         alphabetical_movie_avl.insert(data.id_pelicula, data.nombre_pelicula, data.descripcion, data.puntuacion_star, data.precion_Q, data.paginas, data.categoria);
       }
       graph_movies();
+      alphabetical_movie_avl.in_order(alphabetical_movie_avl.root, id_movies_avl);
+      alphabetical_movie_avl.reverse_order(alphabetical_movie_avl.root, id_movies_avl);
     };
     reader.readAsText(file);
 }
@@ -1139,6 +1464,22 @@ function post_order(){
     in_d.style.display = "none";
 
 }
+
+function alphabetical_order(){
+    var alpha = document.getElementById("alphabetical_movie");
+    var reverse = document.getElementById("reverse_movie");
+
+    alpha.style.display = "block";
+    reverse.style.display = "none";
+}
+
+function reverse_order(){
+    var alpha = document.getElementById("alphabetical_movie");
+    var reverse = document.getElementById("reverse_movie");
+
+    alpha.style.display = "none";
+    reverse.style.display = "block";
+}
 //END: Dynamic web
 
 //BEGIN: Creating user list
@@ -1206,4 +1547,25 @@ function download_categories_graph(){
 
 
 
+var tabla = new hash_table(20);
+tabla.insert(20,25);
+tabla.insert(21,25);
+tabla.insert(22,25);
+tabla.insert(23,25);
+tabla.insert(24,25);
+tabla.insert(25,25);
+tabla.insert(26,25);
+tabla.insert(27,25);
+tabla.insert(28,25);
+tabla.insert(29,25);
+tabla.insert(30,25);
+tabla.insert(31,25);
+tabla.insert(32,25);
+tabla.insert(33,25);
+tabla.insert(34,25);
+tabla.insert(35,25);
+tabla.insert(36,25);
+tabla.insert(37,25);
 
+tabla.show();
+tabla.graph()
