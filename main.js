@@ -1012,7 +1012,7 @@ class Nodo{
         }
         codigodot+="}"
         console.log(codigodot)
-        d3.select("#user_graph").graphviz()
+        d3.select("#categories_graph").graphviz()
         .renderDot(codigodot)
     }
 
@@ -1148,7 +1148,7 @@ function log_to_user_div(){
 //User -> log
 function user_div_to_log(){
     var div_user = document.getElementById('user_div');
-    var log = document.getElementById('log_div');
+    var log = document.getElementById('login_div');
     var div_movies = document.getElementById("movies_user_div");
     var div_actor = document.getElementById("actor_user_div");
     div_user.style.display = "none"; 
@@ -1411,8 +1411,9 @@ function load_categories(){
   
       for (const i in _data) {
         let data = _data[i];
-        console.log(data.id_categoria, data.company)
+        categories.insert(data.id_categoria, data.company)
       }
+      categories.graph();
     };
     reader.readAsText(file);
 }
@@ -1487,6 +1488,7 @@ var user_list = new user_List();
 var actor_tree = new actor_binary_search_tree();
 var id_movies_avl = new movie_avl_tree();
 var alphabetical_movie_avl = new ordered_movie_avl_tree();
+var categories = new hash_table(20);
 user_list.insert("EDD", "Oscar Armi",sha256("12345678"),"2354168452525","12345678", true);
 user_list.insert("ED", "Oscar Armi", sha256("12345678"),"2354168452525","12345678", false);
 //END: Creating user list
@@ -1547,25 +1549,3 @@ function download_categories_graph(){
 
 
 
-var tabla = new hash_table(20);
-tabla.insert(20,25);
-tabla.insert(21,25);
-tabla.insert(22,25);
-tabla.insert(23,25);
-tabla.insert(24,25);
-tabla.insert(25,25);
-tabla.insert(26,25);
-tabla.insert(27,25);
-tabla.insert(28,25);
-tabla.insert(29,25);
-tabla.insert(30,25);
-tabla.insert(31,25);
-tabla.insert(32,25);
-tabla.insert(33,25);
-tabla.insert(34,25);
-tabla.insert(35,25);
-tabla.insert(36,25);
-tabla.insert(37,25);
-
-tabla.show();
-tabla.graph()
